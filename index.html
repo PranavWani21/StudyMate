@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Study Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <h1 style="  margin: 0;">StudyMate</h1>
+             <nav aria-label="Primary" class="nav">
+          <button class="tab-btn " data-panel="tasks-panel" aria-controls="tasks-panel" aria-selected="true" role="tab">Tasks</button>
+          <button class="tab-btn" data-panel="goals-panel" aria-controls="goals-panel" aria-selected="false" role="tab">Goals</button>
+          <button class="tab-btn" data-panel="timeline-panel" aria-controls="timeline-panel" aria-selected="false" role="tab">Timeline</button>
+          <button class="tab-btn" data-panel="settings-panel" aria-controls="settings-panel" aria-selected="false" role="tab">Settings</button>
+        </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- dashboard stats  -->
+        <section id="stats" class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Total Tasks</div>
+                <div class="stat-value" id="stat-total">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Upcoming</div>
+                <div class="stat-value" id="stat-upcoming">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Completed</div>
+                <div class="stat-value" id="stat-completed">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Weekly Hours</div>
+                <div class="stat-value" id="stat-weekly-hours">0</div>
+            </div>
+        </section>
+
+
+        <!-- task page -->
+        <section id="tasks-panel" class="panel is-hidden" role="tabpanel" aria-labelledby="Tasks tab">
+            <div class="grid">
+                <div class="card">
+                    <h3>Add Task</h3>
+                    <form id="task-form" class="form" autocomplete="off">
+                        <div class="form-row">
+                            <label for="task-title">Title</label>
+                            <input id="task-title" name="title" type="text" required
+                                placeholder="e.g., Read Chapter 5" />
+                        </div>
+                        <div class="form-row">
+                            <label for="task-subject">Subject</label>
+                            <input id="task-subject" name="subject" type="text" required placeholder="e.g., Biology" />
+                        </div>
+                        <div class="form-row">
+                            <label for="task-due">Due date & time</label>
+                            <input id="task-due" name="dueAt" type="datetime-local" required />
+                        </div>
+                        <div class="form-row">
+                            <label for="task-duration">Estimated duration (mins)</label>
+                            <input id="task-duration" name="durationMins" type="number" inputmode="numeric" min="10"
+                                step="5" value="60" required />
+                        </div>
+                        <div class="form-row">
+                            <label for="task-priority">Priority</label>
+                            <select id="task-priority" name="priority" required>
+                                <option value="low">Low</option>
+                                <option value="med" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label for="task-reminder">Reminder</label>
+                            <select id="task-reminder" name="remindMins">
+                                <option value="0">At due time</option>
+                                <option value="5">5 minutes before</option>
+                                <option value="15" selected>15 minutes before</option>
+                                <option value="30">30 minutes before</option>
+                                <option value="60">1 hour before</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Add Task</button>
+                            <button type="reset" class="btn">Reset</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="view-card">
+                    <h2 class="section-title">Tasks</h2>
+            <div class="filters">
+              <input id="filter-q" type="search" placeholder="Search by title or subject..." aria-label="Search tasks" />
+              <select id="filter-status" aria-label="Filter by status">
+                <option value="all" selected>All</option>
+                <option value="open">Open</option>
+                <option value="completed">Completed</option>
+                <option value="overdue">Overdue</option>
+              </select>
+              <select id="sort-by" aria-label="Sort by">
+                <option value="dueAsc" selected>Due date ↑</option>
+                <option value="dueDesc">Due date ↓</option>
+                <option value="priority">Priority</option>
+                <option value="createdDesc">Recently added</option>
+              </select>
+            </div>
+            <ul id="task-list" class="list" role="list"></ul>
+            <div class="list-empty" id="task-empty" hidden>No tasks yet. Add your first task above!</div>
+  
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- goal page  -->
+       <section id="goals-panel" class="panel is-hidden" role="tabpanel">
+        <div class="grid">
+          <article class="card">
+            <h2 class="section-title">Add Goal</h2>
+            <form id="goal-form" class="form" autocomplete="off">
+              <div class="form-row">
+                <label for="goal-title">Goal</label>
+                <input id="goal-title" name="title" type="text" required placeholder="e.g., Prepare for Midterms" />
+              </div>
+              <div class="form-row">
+                <label for="goal-target">Target hours</label>
+                <input id="goal-target" name="targetHours" type="number" inputmode="numeric" min="1" value="10" required />
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Add Goal</button>
+                <button type="reset" class="btn">Reset</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="card">
+            <h2 class="section-title">Goals & Progress</h2>
+            <ul id="goal-list" class="list" role="list"></ul>
+            <div class="list-empty" id="goal-empty" hidden>No goals yet. Add one to start tracking your progress.</div>
+          </article>
+        </div>
+      </section>
+      
+
+        <!-- timeline page  -->
+      <section id="timeline-panel" class="panel is-hidden" role="tabpanel">
+        <article class="card">
+          <div class="timeline-header">
+            <h2 class="section-title">Weekly Timeline</h2>
+            <div class="timeline-controls">
+              <button id="prev-week" class="btn">Previous</button>
+              <div id="week-range" aria-live="polite" class="week-range"></div>
+              <button id="next-week" class="btn">Next</button>
+            </div>
+          </div>
+          <div id="timeline-grid" class="timeline-grid" role="table" aria-label="Weekly timeline"></div>
+        </article>
+      </section>
+
+
+
+        <!-- Home page  -->
+        <section class="panel " id="home-panel">
+            <article class="card"> 
+
+                <h2>Welcome to StudyMate</h2>
+                <p>Your smart study planner to help you achieve your academic goals efficiently.</p>
+             <button class="tab-btn  tab-btn-footer" data-panel="tasks-panel" aria-controls="tasks-panel" aria-selected="true" role="tab">Get Started</button>
+                
+                
+                <h2>Features</h2>
+                
+                <div class="feature card">
+                    <h3>Task Management -</h3>
+                    <p>Organize and prioritize your study tasks effectively.</p>
+                </div>
+                <div class="feature card">
+                    <h3>Goal Setting -</h3>
+                    <p>Set and track your academic goals with ease.</p>
+                </div>
+                <div class="feature card">
+                    <h3>Timeline Visualization -</h3>
+                    <p>Visualize your study schedule and deadlines.</p>
+                </div>
+                <div class="feature card">
+                    <h3>Customizable Settings -</h3>
+                    <p>Personalize your study planner to fit your needs.</p>
+                </div>
+                <div class="feature card">
+                    <h3>Local Storage -</h3>
+                    <p>Data is saved locally in your browser using localStorage.</p>
+                </div>
+            </article>
+ </section>
+ 
+  <!-- setting page  -->
+            <section id="settings-panel" class="panel is-hidden" role="tabpanel">
+        <article class="card">
+          <h2 class="section-title">Settings</h2>
+          <div class="form">
+            <div class="form-row">
+              <label for="default-reminder">Default reminder</label>
+              <select id="default-reminder">
+                <option value="0">At due time</option>
+                <option value="5">5 minutes before</option>
+                <option value="15">15 minutes before</option>
+                <option value="30" selected>30 minutes before</option>
+                <option value="60">1 hour before</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <button id="request-notify" class="btn btn-primary" type="button">Enable Notifications</button>
+              <span id="notify-status" class="muted"></span>
+            </div>
+            <div class="form-row">
+              <button id="export-data" class="btn" type="button">Export Data</button>
+              <button id="import-data" class="btn" type="button">Import Data</button>
+              <input id="import-input" type="file" accept="application/json" hidden />
+            </div>
+          </div>
+        </article>
+      </section>
+
+    </main>
+
+
+    <footer class="app-footer">
+        <div class="container footer-content">
+          <button class="tab-btn tab-btn-footer" data-panel="home-panel" aria-controls="home-panel" aria-selected="true" role="tab">Home</button>
+             <button class="tab-btn  tab-btn-footer" data-panel="tasks-panel" aria-controls="tasks-panel" aria-selected="true" role="tab">Tasks</button>
+          <button class="tab-btn tab-btn-footer" data-panel="goals-panel" aria-controls="goals-panel" aria-selected="false" role="tab">Goals</button>
+          <button class="tab-btn tab-btn-footer" data-panel="timeline-panel" aria-controls="timeline-panel" aria-selected="false" role="tab">Timeline</button>
+          <button class="tab-btn tab-btn-footer" data-panel="settings-panel" aria-controls="settings-panel" aria-selected="false" role="tab">Settings</button>
+        
+            <p class="muted">*Data is saved locally in your browser using localStorage.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
